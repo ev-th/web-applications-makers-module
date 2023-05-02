@@ -10,4 +10,8 @@ class Application < Sinatra::Base
     name = params[:name]
     return "Hello #{name}"
   end
+
+  get "/names" do
+    return "Julia, Mary, Karim"
+  end
 end
