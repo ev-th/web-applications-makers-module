@@ -7,30 +7,50 @@ describe Application do
 
   let(:app) { Application.new }
 
+  before(:each) do
+    reset_artists_table
+    reset_albums_table
+  end
+
   context "GET /albums" do
     it "returns all albums" do
       response = get("/albums")
 
       expect(response.status).to eq 200
       expect(response.body).to eq(
-        "Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore" +
-        ", I Put a Spell on You, Baltimore, Here Comes the Sun" +
-        ", Fodder on My Wings, Ring Ring"
+        "Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, " +
+        "Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, " +
+        "Fodder on My Wings, Ring Ring"
       )
     end
   end
 
   context "POST /albums" do
-    it 'returns 200 OK and adds an artist to the database' do
+    it 'returns 200 OK and adds an album to the database' do
       response = post("/albums", title: "Voyage", release_year: "2022", artist_id: "2")
 
       expect(response.status).to eq(200)
-
+      
       response = get("/albums")
       expect(response.body).to include "Voyage"
     end
   end
+  
+  context "GET /artists" do
+    it "returns a list of artist names" do
+      response = get("/artists")
+      expect(response.status).to eq(200)
+      expect(response.body).to eq "Pixies, ABBA, Taylor Swift, Nina Simone"
+    end
+  end
 
-  # context "GET /artists" do
-  #   it "returns "
+  context "POST /artists" do
+    it "returns 200 OK and adds an artist to the database" do
+      response = post("/artists", name: "Wild Nothing", genre: "Indie")
+      expect(response.status).to eq 200
+
+      response = get("/artists")
+      expect(response.body).to include "Wild Nothing"
+    end
+  end
 end
