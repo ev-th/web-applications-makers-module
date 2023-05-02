@@ -1,4 +1,4 @@
-# {{ METHOD }} {{ PATH}} Route Design Recipe
+# GET /names Route Design Recipe
 
 _Copy this design recipe template to test-drive a Sinatra route._
 
