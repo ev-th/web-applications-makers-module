@@ -17,6 +17,15 @@ class Application < Sinatra::Base
   get "/albums" do
     repo = AlbumRepository.new
     albums = repo.all
+    @albums = ""
+
+    for album in albums
+      @albums << "#{' ' * 4}<div>\n"
+      @albums << "#{' ' * 6}Title: #{album.title}\n"
+      @albums << "#{' ' * 6}Released: #{album.release_year}\n"
+      @albums << "#{' ' * 4}</div>\n\n"
+    end
+
     return erb(:albums)
   end
 
