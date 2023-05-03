@@ -20,6 +20,10 @@ class Application < Sinatra::Base
     erb(:albums)
   end
 
+  get "/albums/new" do
+    erb(:new_album_form)
+  end 
+
   get "/albums/:id" do
     album_repo = AlbumRepository.new
     artist_repo = ArtistRepository.new
@@ -38,6 +42,7 @@ class Application < Sinatra::Base
 
     repo = AlbumRepository.new
     repo.create(album)
+    return erb(:new_album_success_page)
   end
 
   get "/artists" do

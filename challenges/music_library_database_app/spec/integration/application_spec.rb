@@ -46,13 +46,33 @@ describe Application do
   end
 
   context "POST /albums" do
-    it 'returns 200 OK and adds an album to the database' do
+    it 'adds an album to the database' do
       response = post("/albums", title: "Voyage", release_year: "2022", artist_id: "2")
-
-      expect(response.status).to eq(200)
       
       response = get("/albums")
       expect(response.body).to include "Voyage"
+    end
+
+    it 'returns 200 OK and success page' do
+      response = post("/albums", title: "Voyage", release_year: "2022", artist_id: "2")
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include "<h1>Your album has been added!</h1>"
+    end
+  end
+
+  context "GET /albums/new" do
+    it "returns the form for adding a new album to the database" do
+      response = get("/albums/new")
+
+      expect(response.status).to eq 200
+      
+      expect(response.body).to include "<h1>Add a new album</h1>"
+      expect(response.body).to include '<form action="/albums" method="POST">'
+      expect(response.body).to include '<input type="text" name="title">'
+      expect(response.body).to include '<input type="text" name="release_year">'
+      expect(response.body).to include '<input type="text" name="artist_id">'
+      expect(response.body).to include '<input type="submit">'
     end
   end
   
