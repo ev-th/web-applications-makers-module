@@ -64,6 +64,22 @@ describe Application do
     end
   end
 
+  context "GET /artists/:id" do
+    it "returns html with details of a single artist" do
+      response = get("/artists/1")
+      expect(response.status).to eq 200
+      expect(response.body).to include "<h1>Pixies</h1>"
+      expect(response.body).to include "<p>Rock</p>"
+    end
+
+    it "returns html with details of another artist" do
+      response = get("/artists/2")
+      expect(response.status).to eq 200
+      expect(response.body).to include "<h1>ABBA</h1>"
+      expect(response.body).to include "<p>Pop</p>"
+    end
+  end
+
   context "POST /artists" do
     it "returns 200 OK and adds an artist to the database" do
       response = post("/artists", name: "Wild Nothing", genre: "Indie")
