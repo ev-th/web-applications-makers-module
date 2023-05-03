@@ -15,6 +15,11 @@ route: /albums
 body params:
   title, release_year, artist_id
 
+method: GET
+route: /albums
+path params:
+  /:id
+
 
 ## 2. Design the Response
 
@@ -32,6 +37,18 @@ _Replace the below with your own design. Think of all the different possible res
 (No content)
 ```
 
+```html
+<html>
+  <head></head>
+  <body>
+    <h1>album title</h1>
+    <p>
+      Release year: album release year
+      Artist: album artist
+    </p>
+  </body>
+</html>
+```
 ## 3. Write Examples
 
 _Replace these with your own design._
@@ -47,6 +64,38 @@ artist_id=2
 
 # Expected response (200 OK)
 (No content)
+```
+
+```html
+# Request:
+GET /albums/1
+
+Response:
+<html>
+  <head></head>
+  <body>
+    <h1>Doolittle</h1>
+    <p>
+      Release year: 1989
+      Artist: Pixies
+    </p>
+  </body>
+</html>
+
+# Request:
+GET /albums/2
+Response:
+<html>
+  <head></head>
+  <body>
+    <h1>Surfer Rosa</h1>
+    <p>
+      Release year: 1988
+      Artist: Pixies
+    </p>
+  </body>
+</html>
+
 ```
 
 ## 4. Encode as Tests Examples

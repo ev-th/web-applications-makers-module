@@ -53,4 +53,15 @@ describe Application do
       expect(response.body).to include "Wild Nothing"
     end
   end
+
+  context "GET /albums/:id" do
+    it "returns correct html for id 1" do
+      response = get('/albums/1')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Doolittle</h1>')
+      expect(response.body).to include('Release year: 1989')
+      expect(response.body).to include('Artist: Pixies')
+    end
+  end
 end
