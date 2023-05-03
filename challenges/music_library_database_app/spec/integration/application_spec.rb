@@ -87,7 +87,19 @@ describe Application do
       expect(response.body).to include '<p><a href="/artists/4">Nina Simone</a> - Pop</p>'
     end
   end
-
+  
+  context "GET /artists/new" do
+    it "returns an html form to enter a new artist to the database" do
+      response = get("/artists/new")
+      expect(response.status).to eq 200
+      expect(response.body).to include "<h1>Add a new artist</h1>"
+      expect(response.body).to include '<form action="/artists" method="POST">'
+      expect(response.body).to include '<input type="text" name="name">'
+      expect(response.body).to include '<input type="text" name="genre">'
+      expect(response.body).to include '<input type="submit">'
+    end
+  end
+  
   context "GET /artists/:id" do
     it "returns html with details of a single artist" do
       response = get("/artists/1")
@@ -105,12 +117,16 @@ describe Application do
   end
 
   context "POST /artists" do
-    it "returns 200 OK and adds an artist to the database" do
+    it "adds an artist to the database" do
       response = post("/artists", name: "Wild Nothing", genre: "Indie")
-      expect(response.status).to eq 200
-
       response = get("/artists")
       expect(response.body).to include "Wild Nothing"
+    end
+    
+    it "returns 200 OK and an html success page" do
+      response = post("/artists", name: "Wild Nothing", genre: "Indie")
+      expect(response.status).to eq 200
+      expect(response.body).to include "<h1>Your artist has been added!</h1>"
     end
   end
 end

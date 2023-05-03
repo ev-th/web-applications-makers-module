@@ -51,6 +51,10 @@ class Application < Sinatra::Base
     erb(:artists)
   end
 
+  get "/artists/new" do
+    erb(:new_artist_form)
+  end
+
   get "/artists/:id" do
     repo = ArtistRepository.new
     @artist = repo.find(params[:id])
@@ -64,5 +68,6 @@ class Application < Sinatra::Base
 
     repo = ArtistRepository.new
     repo.create(artist)
+    erb(:new_artist_success_page)
   end
 end
